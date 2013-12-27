@@ -17,32 +17,35 @@
 # limitations under the License.
 #
 
-case node["platform_family"]
-when "debian"
-  default["nginx"]["packages"] = %w(
+default["nginx"]["packages"] = value_for_platform_family(
+  "debian" => %w(
     nginx
-  )
-
-  default["nginx"]["web_dir"] = "/var/www"
-  default["nginx"]["user"] = "www-data"
-  default["nginx"]["group"] = "www-data"
-when "ubuntu"
-  default["nginx"]["packages"] = %w(
+  ),
+  "ubuntu" => %w(
     nginx
-  )
-
-  default["nginx"]["web_dir"] = "/var/www"
-  default["nginx"]["user"] = "www-data"
-  default["nginx"]["group"] = "www-data"
-when "suse"
-  default["nginx"]["packages"] = %w(
+  ),
+  "suse" => %w(
     nginx-1.0
   )
+)
 
-  default["nginx"]["web_dir"] = "/srv/www/htdocs"
-  default["nginx"]["user"] = "nginx"
-  default["nginx"]["group"] = "nginx"
-end
+default["nginx"]["web_dir"] = value_for_platform_family(
+  "debian" => "/var/www",
+  "ubuntu" => "/var/www",
+  "suse" => "/srv/www/htdocs"
+)
+
+default["nginx"]["user"] = value_for_platform_family(
+  "debian" => "www-data",
+  "ubuntu" => "www-data",
+  "suse" => "nginx"
+)
+
+default["nginx"]["group"] = value_for_platform_family(
+  "debian" => "www-data",
+  "ubuntu" => "www-data",
+  "suse" => "nginx"
+)
 
 default["nginx"]["apps"] = %w(
   default
@@ -102,6 +105,7 @@ default["nginx"]["apps_dir"] = "/etc/nginx/sites-available"
 default["nginx"]["listen"] = "0.0.0.0"
 default["nginx"]["processes"] = 3
 default["nginx"]["connections"] = 1024
+
 default["nginx"]["ssl"]["enabled"] = false
 default["nginx"]["ssl"]["key"] = ""
 default["nginx"]["ssl"]["cert"] = ""
