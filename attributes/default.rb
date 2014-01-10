@@ -25,7 +25,7 @@ default["nginx"]["packages"] = value_for_platform_family(
     nginx
   ),
   "suse" => %w(
-    nginx-1.0
+    nginx
   )
 )
 
