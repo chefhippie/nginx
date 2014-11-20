@@ -36,7 +36,7 @@ server {
   error_page 503 /50x.html;
   error_page 504 /50x.html;
 
-  <% if node.recipes.include?("php") and node["php"]["default_app"]["enabled"] %>
+  <% if node.recipes.include?("php") and node["php"]["fpm"]["default"]["enabled"] %>
     location ~ [^/]\.php(/|$) {
       fastcgi_split_path_info ^(.+?\.php)(/.*)$;
 
@@ -44,7 +44,7 @@ server {
         return 404;
       }
 
-      fastcgi_pass unix:<%= node["php"]["run_dir"] %>/www.socket;
+      fastcgi_pass unix:<%= node["php"]["fpm"]["run_dir"] %>/www.socket;
       fastcgi_index index.php;
 
       include <%= @config_dir %>/fastcgi.params;
@@ -98,7 +98,7 @@ server {
   error_page 503 /50x.html;
   error_page 504 /50x.html;
 
-  <% if node.recipes.include?("php") and node["php"]["default_app"]["enabled"] %>
+  <% if node.recipes.include?("php") and node["php"]["fpm"]["default"]["enabled"] %>
     location ~ [^/]\.php(/|$) {
       fastcgi_split_path_info ^(.+?\.php)(/.*)$;
 
@@ -106,7 +106,7 @@ server {
         return 404;
       }
 
-      fastcgi_pass unix:<%= node["php"]["run_dir"] %>/www.socket;
+      fastcgi_pass unix:<%= node["php"]["fpm"]["run_dir"] %>/www.socket;
       fastcgi_index index.php;
 
       include <%= @config_dir %>/fastcgi.params;
