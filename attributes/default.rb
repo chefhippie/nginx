@@ -109,3 +109,8 @@ default["nginx"]["connections"] = 1024
 default["nginx"]["ssl"]["enabled"] = false
 default["nginx"]["ssl"]["key"] = ""
 default["nginx"]["ssl"]["cert"] = ""
+
+default["nginx"]["zypper"]["alias"] = "server-http"
+default["nginx"]["zypper"]["title"] = "Server HTTP"
+default["nginx"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/server:/http/openSUSE_#{node["platform_version"] == "12.1" ? "12.3" : node["platform_version"]}/"
+default["nginx"]["zypper"]["key"] = "#{node["nginx"]["zypper"]["repo"]}repodata/repomd.xml.key"

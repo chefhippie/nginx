@@ -17,6 +17,19 @@
 # limitations under the License.
 #
 
+case node["platform_family"]
+when "suse"
+  include_recipe "zypper"
+
+  zypper_repository node["nginx"]["zypper"]["alias"] do
+    uri node["nginx"]["zypper"]["repo"]
+    key node["nginx"]["zypper"]["key"]
+    title node["nginx"]["zypper"]["title"]
+
+    action :add
+  end
+end
+
 node["nginx"]["packages"].each do |name|
   package name do
     action :install
