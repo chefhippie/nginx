@@ -27,6 +27,10 @@ when "suse"
     title node["nginx"]["zypper"]["title"]
 
     action :add
+
+    only_if do
+      node["nginx"]["zypper"]["enabled"]
+    end
   end
 end
 

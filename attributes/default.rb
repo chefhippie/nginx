@@ -21,9 +21,6 @@ default["nginx"]["packages"] = value_for_platform_family(
   "debian" => %w(
     nginx
   ),
-  "ubuntu" => %w(
-    nginx
-  ),
   "suse" => %w(
     nginx
   )
@@ -31,19 +28,16 @@ default["nginx"]["packages"] = value_for_platform_family(
 
 default["nginx"]["web_dir"] = value_for_platform_family(
   "debian" => "/var/www",
-  "ubuntu" => "/var/www",
   "suse" => "/srv/www/htdocs"
 )
 
 default["nginx"]["user"] = value_for_platform_family(
   "debian" => "www-data",
-  "ubuntu" => "www-data",
   "suse" => "nginx"
 )
 
 default["nginx"]["group"] = value_for_platform_family(
   "debian" => "www-data",
-  "ubuntu" => "www-data",
   "suse" => "nginx"
 )
 
@@ -110,6 +104,7 @@ default["nginx"]["ssl"]["enabled"] = false
 default["nginx"]["ssl"]["key"] = ""
 default["nginx"]["ssl"]["cert"] = ""
 
+default["nginx"]["zypper"]["enabled"] = true
 default["nginx"]["zypper"]["alias"] = "server-http"
 default["nginx"]["zypper"]["title"] = "Server HTTP"
 default["nginx"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/server:/http/openSUSE_#{node["platform_version"] == "12.1" ? "12.3" : node["platform_version"]}/"
