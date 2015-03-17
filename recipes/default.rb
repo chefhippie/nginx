@@ -26,7 +26,7 @@ when "suse"
     key node["nginx"]["zypper"]["key"]
     title node["nginx"]["zypper"]["title"]
 
-    action :add
+    action [:add, :refresh]
 
     only_if do
       node["nginx"]["zypper"]["enabled"]
