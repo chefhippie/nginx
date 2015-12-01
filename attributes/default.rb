@@ -104,8 +104,22 @@ default["nginx"]["ssl"]["enabled"] = false
 default["nginx"]["ssl"]["key"] = ""
 default["nginx"]["ssl"]["cert"] = ""
 
-default["nginx"]["zypper"]["enabled"] = true
-default["nginx"]["zypper"]["alias"] = "server-http"
-default["nginx"]["zypper"]["title"] = "Server HTTP"
-default["nginx"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/server:/http/openSUSE_#{node["platform_version"] == "12.1" ? "12.3" : node["platform_version"]}/"
-default["nginx"]["zypper"]["key"] = "#{node["nginx"]["zypper"]["repo"]}repodata/repomd.xml.key"
+case node["platform_family"]
+when "suse"
+  repo = case node["platform_version"]
+  when /\A13\.\d+\z/
+    "openSUSE_#{node["platform_version"]}"
+  when /\A42\.\d+\z/
+    "openSUSE_Leap_#{node["platform_version"]}"
+  when /\A\d{8}\z/
+    "openSUSE_Tumbleweed"
+  else
+    raise "Unsupported SUSE version"
+  end
+
+  default["nginx"]["zypper"]["enabled"] = true
+  default["nginx"]["zypper"]["alias"] = "server-http"
+  default["nginx"]["zypper"]["title"] = "Server HTTP"
+  default["nginx"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/server:/http/#{repo}/"
+  default["nginx"]["zypper"]["key"] = "#{node["nginx"]["zypper"]["repo"]}repodata/repomd.xml.key"
+end
